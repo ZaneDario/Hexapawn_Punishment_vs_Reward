@@ -1,12 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
-    public String[][] board = new String[3][3];
+    public char[][] board = new char[3][3];
+    public List<Piece> pieces = new ArrayList<Piece>();
 
     public Board()
     {
         for (int i = 0; i < 3; i++) {
-            board[0][i] = new Piece("O", i, 0).type;
-            board[1][i] = " ";
-            board[2][i] = new Piece("X", i, 2).type;
+            Piece o = new Piece('o', i, 0);
+            Piece x = new Piece('x', i, 0);
+            board[0][i] = o.type;
+            board[1][i] = ' ';
+            board[2][i] = x.type;
+            pieces.add(o);
+            pieces.add(x);
         }
 
         for (int i = 0; i < 3; i++) {
