@@ -17,11 +17,19 @@ public class Board {
             pieces.add(x);
         }
 
+        //Print initial board and pieces.
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j]);
             }
             System.out.println();
         }
+
+        init();
+    }
+
+    void init()
+    {
+        //The list of moves which contain more lists of moves should starts here.
     }
 }
