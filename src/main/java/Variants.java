@@ -8,7 +8,7 @@ public class Variants {
 
         char playing = xTurn ? 'x' : 'o';
         char waiting = xTurn ? 'o' : 'x';
-        int sign = xTurn ? -1 : 1;
+        int ySign = xTurn ? -1 : 1;
 
         for (Piece piece : board.pieces) {
 
@@ -16,77 +16,41 @@ public class Variants {
             int yPos = piece.yPos;
 
             if (piece.type == playing) {
-                if (board.board[xPos][yPos + sign] == ' ') {
-                    Board b = new Board(xTurn);
+                if (board.board[xPos][yPos + ySign] == ' ')
+                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, 0, ySign));
 
-                    for (Piece p : board.pieces) {
-                        Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
+                if (board.board[xPos - 1][yPos + ySign] == waiting)
+                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, -1, ySign));
 
-                        if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
-                            newPiece.yPos = yPos + sign;
-                        }
-
-                        b.pieces.add(newPiece);
-                        b.posPieces();
-                    }
-
-                    possibleVariants.add(b);
-                }
-
-                if (board.board[xPos - 1][yPos + sign] == waiting) {
-                    Board b = new Board(xTurn);
-
-                    for (Piece p : board.pieces) {
-                        Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
-
-                        if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
-                            newPiece.xPos = xPos - 1;
-                            newPiece.yPos = yPos + sign;
-                        }
-
-                        b.pieces.add(newPiece);
-
-                        if (newPiece.xPos == xPos - 1 && newPiece.yPos == yPos + sign
-                                && newPiece.type == waiting) {
-                            b.pieces.remove(newPiece);
-                        }
-
-                        b.posPieces();
-                    }
-                    possibleVariants.add(b);
-                }
-
+                if (board.board[xPos + 1][yPos + ySign] == waiting)
+                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, +1, ySign));
             }
 
-            if (board.board[xPos + 1][yPos + sign] == waiting) {
-                Board b = new Board(xTurn);
-
-                for (Piece p : board.pieces) {
-                    Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
-
-                    if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
-                        newPiece.xPos = xPos + 1;
-                        newPiece.yPos = yPos + sign;
-                    }
-
-                    b.pieces.add(newPiece);
-
-                    if (newPiece.xPos == xPos + 1 && newPiece.yPos == yPos + sign
-                            && newPiece.type == waiting) {
-                        b.pieces.remove(newPiece);
-                    }
-
-                    b.posPieces();
-                }
-                possibleVariants.add(b);
-            }
         }
         return possibleVariants;
     }
 
-    //public Board GenerateVariant()
-    //{
-//
-    //}
+    private static Board GenerateVariant(Board board, char playing, char waiting, int xPos, int yPos, int xSign, int ySign)
+    {
+        Board b = new Board(board.xTurn);
+        for (Piece p : board.pieces) {
+            Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
+
+            if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
+                newPiece.xPos = xPos + xSign;
+                newPiece.yPos = yPos + ySign;
+            }
+
+            b.pieces.add(newPiece);
+
+            if (newPiece.xPos == xPos - 1 && newPiece.yPos == yPos + ySign
+                    && newPiece.type == waiting) {
+                b.pieces.remove(newPiece);
+            }
+
+            b.posPieces();
+        }
+        return b;
+    }
 }
 
