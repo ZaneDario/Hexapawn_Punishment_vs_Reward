@@ -16,17 +16,17 @@ public class Variants {
             int yPos = piece.yPos;
 
             if (piece.type == playing) {
-                if (board.board[xPos][yPos + ySign] == ' ')
+                if (checkBorders(xPos, 0, yPos, ySign) && board.board[xPos][yPos + ySign] == ' ')
                     possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, 0, ySign));
 
-                if (board.board[xPos - 1][yPos + ySign] == waiting)
+                if (checkBorders(xPos, -1, yPos, ySign) && board.board[xPos - 1][yPos + ySign] == waiting)
                     possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, -1, ySign));
 
-                if (board.board[xPos + 1][yPos + ySign] == waiting)
+                if (checkBorders(xPos, +1, yPos, ySign) && board.board[xPos + 1][yPos + ySign] == waiting)
                     possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, +1, ySign));
             }
-
         }
+
         return possibleVariants;
     }
 
@@ -39,6 +39,9 @@ public class Variants {
             if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
                 newPiece.xPos = xPos + xSign;
                 newPiece.yPos = yPos + ySign;
+
+                if((playing == 'x' && newPiece.yPos == 0) || (playing == 'o' && newPiece.yPos == 2))
+                    board.isFinished = true;
             }
 
             b.pieces.add(newPiece);
@@ -51,6 +54,13 @@ public class Variants {
             b.posPieces();
         }
         return b;
+    }
+
+    private static boolean checkBorders(int xPos, int xChange, int yPos, int yChange)
+    {
+        boolean x = (xPos + xChange >= 0 && xPos + xChange <= 3);
+        boolean y = (yPos + yChange >= 0 && yPos + yChange <= 3);
+        return (x && y);
     }
 }
 

@@ -7,6 +7,7 @@ public class Board {
     public char[][] board = new char[3][3];
     public List<Piece> pieces = new ArrayList<Piece>();
     public List<Board> possibleVariants = new ArrayList<Board>();
+    public boolean isFinished = false;
 
     public Board(boolean xTurn)
     {
@@ -33,10 +34,14 @@ public class Board {
     {
         possibleVariants = Variants.getPossibleVariant(this, !this.xTurn);
 
+        if(possibleVariants.size() == 0)
+            this.isFinished = true;
+
         for (Board board: possibleVariants) {
             Game.variants++;
-            board.checkVariants();
-        }
 
+            if(!board.isFinished)
+                board.checkVariants();
+        }
     }
 }
