@@ -58,8 +58,8 @@ public class Variants {
 
     private static boolean checkBorders(int xPos, int xChange, int yPos, int yChange)
     {
-        boolean x = (xPos + xChange >= 0 && xPos + xChange <= 3);
-        boolean y = (yPos + yChange >= 0 && yPos + yChange <= 3);
+        boolean x = (xPos + xChange >= 0 && xPos + xChange < 3);
+        boolean y = (yPos + yChange >= 0 && yPos + yChange < 3);
         return (x && y);
     }
 }
