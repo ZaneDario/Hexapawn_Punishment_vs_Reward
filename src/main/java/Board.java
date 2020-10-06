@@ -3,14 +3,16 @@ import java.util.List;
 
 public class Board {
 
+    public int depth;
     public boolean xTurn;
     public char[][] board = new char[3][3];
     public List<Piece> pieces = new ArrayList<Piece>();
     public List<Board> possibleVariants = new ArrayList<Board>();
     public boolean isFinished = false;
 
-    public Board(boolean xTurn)
+    public Board(boolean xTurn, int depth)
     {
+        this.depth = depth;
         this.xTurn = xTurn;
 
         for (int i = 0; i < 3; i++) {
@@ -49,12 +51,12 @@ public class Board {
 
     public void drawBoard()
     {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j]);
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                System.out.print(board[x][y]);
             }
             System.out.println();
         }
-        System.out.println("------------------------");
+        System.out.println("------------------------ depth: " + this.depth);
     }
 }

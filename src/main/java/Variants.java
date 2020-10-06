@@ -34,7 +34,7 @@ public class Variants {
 
     private static Board GenerateVariant(Board board, char playing, char waiting, int xPos, int yPos, int xSign, int ySign)
     {
-        Board b = new Board(!board.xTurn);
+        Board b = new Board(!board.xTurn, board.depth + 1);
         for (Piece p : board.pieces)
         {
             Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
@@ -44,7 +44,7 @@ public class Variants {
                 newPiece.xPos = xPos + xSign;
                 newPiece.yPos = yPos + ySign;
 
-                if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
+                if((newPiece.type == 'x' && newPiece.xPos == 0) || (newPiece.type == 'o' && newPiece.xPos == 2))
                 {
                     board.isFinished = true;
                     Game.countVariants(board.xTurn);

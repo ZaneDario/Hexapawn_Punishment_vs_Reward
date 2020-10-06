@@ -25,7 +25,7 @@ public class Game {
          pieces.add(x2);
          pieces.add(x3);
 
-         Board initialBoard = new Board(true);
+         Board initialBoard = new Board(true, 1);
          initialBoard.pieces = pieces;
          initialBoard.posPieces();
 
