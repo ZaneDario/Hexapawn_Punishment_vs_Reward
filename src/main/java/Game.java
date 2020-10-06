@@ -4,6 +4,8 @@ import java.util.List;
 public class Game {
 
     public static int variants = 0;
+    public static int xWins = 0;
+    public static int oWins = 0;
 
      public void start()
      {
@@ -28,5 +30,21 @@ public class Game {
          initialBoard.posPieces();
 
          initialBoard.checkVariants();
+
+         System.out.println("Variants: " + variants);
+         System.out.println("x wins: " + xWins);
+         System.out.println("o wins: " + oWins);
+     }
+
+     public static void countVariants(boolean xTurn)
+     {
+         Game.variants++;
+
+         if(xTurn)
+             Game.xWins++;
+         else
+             Game.oWins++;
+
+         System.out.println("---------------------------------------");
      }
 }

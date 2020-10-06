@@ -3,9 +3,10 @@ import java.util.List;
 
 public class Variants {
 
-    public static List<Board> getPossibleVariant(Board board, boolean xTurn) {
+    public static List<Board> getPossibleVariant(Board board) {
         List<Board> possibleVariants = new ArrayList<Board>();
 
+        boolean xTurn = board.xTurn;
         char playing = xTurn ? 'x' : 'o';
         char waiting = xTurn ? 'o' : 'x';
         int ySign = xTurn ? -1 : 1;
@@ -16,6 +17,7 @@ public class Variants {
             int yPos = piece.yPos;
 
             if (piece.type == playing) {
+
                 if (checkBorders(xPos, 0, yPos, ySign) && board.board[xPos][yPos + ySign] == ' ')
                     possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, 0, ySign));
 
@@ -32,22 +34,27 @@ public class Variants {
 
     private static Board GenerateVariant(Board board, char playing, char waiting, int xPos, int yPos, int xSign, int ySign)
     {
-        Board b = new Board(board.xTurn);
-        for (Piece p : board.pieces) {
+        Board b = new Board(!board.xTurn);
+        for (Piece p : board.pieces)
+        {
             Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
 
-            if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing) {
+            if (newPiece.xPos == xPos && newPiece.yPos == yPos && newPiece.type == playing)
+            {
                 newPiece.xPos = xPos + xSign;
                 newPiece.yPos = yPos + ySign;
 
-                if((playing == 'x' && newPiece.yPos == 0) || (playing == 'o' && newPiece.yPos == 2))
+                if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
+                {
                     board.isFinished = true;
+                    Game.countVariants(board.xTurn);
+                }
+
             }
 
             b.pieces.add(newPiece);
 
-            if (newPiece.xPos == xPos - 1 && newPiece.yPos == yPos + ySign
-                    && newPiece.type == waiting) {
+            if (newPiece.xPos == xPos + xSign && newPiece.yPos == yPos + ySign && newPiece.type == waiting) {
                 b.pieces.remove(newPiece);
             }
 

@@ -32,16 +32,29 @@ public class Board {
 
     public void checkVariants()
     {
-        possibleVariants = Variants.getPossibleVariant(this, !this.xTurn);
+        drawBoard();
+        possibleVariants = Variants.getPossibleVariant(this);
 
         if(possibleVariants.size() == 0)
+        {
             this.isFinished = true;
+            Game.countVariants(this.xTurn);
+        }
 
         for (Board board: possibleVariants) {
-            Game.variants++;
-
             if(!board.isFinished)
                 board.checkVariants();
         }
+    }
+
+    public void drawBoard()
+    {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("------------------------");
     }
 }
