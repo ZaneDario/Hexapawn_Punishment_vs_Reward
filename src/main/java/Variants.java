@@ -44,10 +44,10 @@ public class Variants {
                 newPiece.xPos = xPos + xSign;
                 newPiece.yPos = yPos + ySign;
 
-                if((newPiece.type == 'x' && newPiece.xPos == 0) || (newPiece.type == 'o' && newPiece.xPos == 2))
+                if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
                 {
                     board.isFinished = true;
-                    Game.countVariants(board.xTurn);
+                    Game.countVariantsProm(board.xTurn, newPiece.xPos, newPiece.yPos, playing);
                 }
 
             }
@@ -57,9 +57,8 @@ public class Variants {
             if (newPiece.xPos == xPos + xSign && newPiece.yPos == yPos + ySign && newPiece.type == waiting) {
                 b.pieces.remove(newPiece);
             }
-
-            b.posPieces();
         }
+        b.posPieces();
         return b;
     }
 

@@ -40,7 +40,7 @@ public class Board {
         if(possibleVariants.size() == 0)
         {
             this.isFinished = true;
-            Game.countVariants(this.xTurn);
+            Game.countVariantsZugz(this.xTurn);
         }
 
         for (Board board: possibleVariants) {
@@ -51,12 +51,12 @@ public class Board {
 
     public void drawBoard()
     {
+        System.out.println("---vvv----------- depth: " + this.depth);
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
                 System.out.print(board[x][y]);
             }
             System.out.println();
         }
-        System.out.println("------------------------ depth: " + this.depth);
     }
 }

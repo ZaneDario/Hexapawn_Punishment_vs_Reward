@@ -36,7 +36,7 @@ public class Game {
          System.out.println("o wins: " + oWins);
      }
 
-     public static void countVariants(boolean xTurn)
+     public static void countVariantsZugz(boolean xTurn)
      {
          Game.variants++;
 
@@ -45,6 +45,18 @@ public class Game {
          else
              Game.oWins++;
 
-         System.out.println("---------------------------------------");
+         System.out.println("----^^^--Variant finished--^^^---- : Zugzwang.");
      }
+
+    public static void countVariantsProm(boolean xTurn, int x, int y, char playing)
+    {
+        Game.variants++;
+
+        if(xTurn)
+            Game.xWins++;
+        else
+            Game.oWins++;
+
+        System.out.println("----^^^--Variant finished: Pawn Promoted!! x: " + x + " y: " + y + " piece: " + playing);
+    }
 }
