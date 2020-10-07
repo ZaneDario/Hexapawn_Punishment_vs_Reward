@@ -57,6 +57,6 @@ public class Game {
         else
             Game.oWins++;
 
-        System.out.println("----^^^--Variant finished: Pawn Promoted!! x: " + x + " y: " + y + " piece: " + playing);
+        System.out.println("----vvvv--Variant finished: Pawn Promoted!! x: " + x + " y: " + y + " piece: " + playing);
     }
 }

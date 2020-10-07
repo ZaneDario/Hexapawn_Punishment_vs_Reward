@@ -46,7 +46,7 @@ public class Variants {
 
                 if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
                 {
-                    board.isFinished = true;
+                    b.isFinished = true;
                     Game.countVariantsProm(board.xTurn, newPiece.xPos, newPiece.yPos, playing);
                 }
 
@@ -59,6 +59,10 @@ public class Variants {
             }
         }
         b.posPieces();
+
+        if(b.isFinished)
+            b.drawBoard();
+
         return b;
     }
 
