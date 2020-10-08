@@ -34,7 +34,7 @@ public class Board {
 
     public void checkVariants()
     {
-        drawBoard();
+        //drawBoard();
         possibleVariants = Variants.getPossibleVariant(this);
 
         if(possibleVariants.size() == 0)

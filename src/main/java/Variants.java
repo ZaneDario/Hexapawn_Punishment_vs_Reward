@@ -60,8 +60,8 @@ public class Variants {
         }
         b.posPieces();
 
-        if(b.isFinished)
-            b.drawBoard();
+        //if(b.isFinished)
+        //    b.drawBoard();
 
         return b;
     }

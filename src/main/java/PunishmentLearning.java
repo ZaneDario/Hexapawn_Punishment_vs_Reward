@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Simulation {
+public class PunishmentLearning {
 
     Random random = new Random();
     List<Board> sequence = new ArrayList<Board>();

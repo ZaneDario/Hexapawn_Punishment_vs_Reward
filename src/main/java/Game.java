@@ -34,14 +34,21 @@ public class Game {
 
          initialBoard.checkVariants();
 
-         System.out.println("Variants: " + variants);
-         System.out.println("x wins: " + xWins);
-         System.out.println("o wins: " + oWins);
+         //System.out.println("Variants: " + variants);
+         //System.out.println("x wins: " + xWins);
+         //System.out.println("o wins: " + oWins);
 
          for (int i = 0; i < 1000; i++) {
-             Simulation simulation = new Simulation();
-             simulation.simulate(initialBoard);
+             PunishmentLearning punishmentLearning = new PunishmentLearning();
+             punishmentLearning.simulate(initialBoard);
          }
+
+
+         for (int i = 0; i < 1000; i++) {
+             RewardLearning rl = new RewardLearning();
+             rl.simulate(initialBoard);
+         }
+
      }
 
      public static void countVariantsZugz(boolean xTurn)
@@ -53,7 +60,7 @@ public class Game {
          else
              Game.oWins++;
 
-         System.out.println("----^^^--Variant finished--^^^---- : Zugzwang. x Wins? " + xTurn);
+         //System.out.println("----^^^--Variant finished--^^^---- : Zugzwang. x Wins? " + xTurn);
      }
 
     public static void countVariantsProm(boolean xTurn, int x, int y, char playing)
@@ -65,6 +72,6 @@ public class Game {
         else
             Game.oWins++;
 
-        System.out.println("----vvvv--Variant finished: Pawn Promoted!! x Wins? " + xTurn);
+        //System.out.println("----vvvv--Variant finished: Pawn Promoted!! x Wins? " + xTurn);
     }
 }
