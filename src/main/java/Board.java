@@ -40,7 +40,7 @@ public class Board {
         if(possibleVariants.size() == 0)
         {
             this.isFinished = true;
-            Game.countVariantsZugz(this.xTurn);
+            Game.countVariantsZugz(!this.xTurn);
         }
 
         for (Board board: possibleVariants) {
