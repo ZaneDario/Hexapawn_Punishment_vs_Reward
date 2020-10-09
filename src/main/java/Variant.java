@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Variant {
 
     public int depth;
     public boolean xTurn;
     public char[][] board = new char[3][3];
     public List<Piece> pieces = new ArrayList<Piece>();
-    public List<Board> possibleVariants = new ArrayList<Board>();
+    private List<Variant> possibleVariants = new ArrayList<Variant>();
     public boolean isFinished = false;
 
-    public Board(boolean xTurn, int depth)
+    public Variant(boolean xTurn, int depth)
     {
         this.depth = depth;
         this.xTurn = xTurn;
@@ -34,22 +34,22 @@ public class Board {
 
     public void checkVariants()
     {
-        //drawBoard();
-        possibleVariants = Variants.getPossibleVariant(this);
+        drawVariant();
+        possibleVariants = VariantsCalculator.getPossibleVariant(this);
 
         if(possibleVariants.size() == 0)
         {
             this.isFinished = true;
-            Game.countVariantsZugz(!this.xTurn);
+            Game.countVariants(!this.xTurn, "Zugzwang");
         }
 
-        for (Board board: possibleVariants) {
-            if(!board.isFinished)
-                board.checkVariants();
+        for (Variant variant : possibleVariants) {
+            if(!variant.isFinished)
+                variant.checkVariants();
         }
     }
 
-    public void drawBoard()
+    public void drawVariant()
     {
         System.out.println("---vvv----------- depth: " + this.depth);
         for (int x = 0; x < 3; x++) {
@@ -58,5 +58,10 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public List<Variant> getPossibleVariants()
+    {
+        return possibleVariants;
     }
 }

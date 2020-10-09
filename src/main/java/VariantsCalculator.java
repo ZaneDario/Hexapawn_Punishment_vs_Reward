@@ -1,41 +1,41 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Variants {
+public class VariantsCalculator {
 
-    public static List<Board> getPossibleVariant(Board board) {
-        List<Board> possibleVariants = new ArrayList<Board>();
+    public static List<Variant> getPossibleVariant(Variant variant) {
+        List<Variant> possibleVariants = new ArrayList<Variant>();
 
-        boolean xTurn = board.xTurn;
+        boolean xTurn = variant.xTurn;
         char playing = xTurn ? 'x' : 'o';
         char waiting = xTurn ? 'o' : 'x';
         int ySign = xTurn ? -1 : 1;
 
-        for (Piece piece : board.pieces) {
+        for (Piece piece : variant.pieces) {
 
             int xPos = piece.xPos;
             int yPos = piece.yPos;
 
             if (piece.type == playing) {
 
-                if (checkBorders(xPos, 0, yPos, ySign) && board.board[xPos][yPos + ySign] == ' ')
-                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, 0, ySign));
+                if (checkBorders(xPos, 0, yPos, ySign) && variant.board[xPos][yPos + ySign] == ' ')
+                    possibleVariants.add(GenerateVariant(variant, playing, waiting, xPos, yPos, 0, ySign));
 
-                if (checkBorders(xPos, -1, yPos, ySign) && board.board[xPos - 1][yPos + ySign] == waiting)
-                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, -1, ySign));
+                if (checkBorders(xPos, -1, yPos, ySign) && variant.board[xPos - 1][yPos + ySign] == waiting)
+                    possibleVariants.add(GenerateVariant(variant, playing, waiting, xPos, yPos, -1, ySign));
 
-                if (checkBorders(xPos, +1, yPos, ySign) && board.board[xPos + 1][yPos + ySign] == waiting)
-                    possibleVariants.add(GenerateVariant(board, playing, waiting, xPos, yPos, +1, ySign));
+                if (checkBorders(xPos, +1, yPos, ySign) && variant.board[xPos + 1][yPos + ySign] == waiting)
+                    possibleVariants.add(GenerateVariant(variant, playing, waiting, xPos, yPos, +1, ySign));
             }
         }
 
         return possibleVariants;
     }
 
-    private static Board GenerateVariant(Board board, char playing, char waiting, int xPos, int yPos, int xSign, int ySign)
+    private static Variant GenerateVariant(Variant variant, char playing, char waiting, int xPos, int yPos, int xSign, int ySign)
     {
-        Board b = new Board(!board.xTurn, board.depth + 1);
-        for (Piece p : board.pieces)
+        Variant b = new Variant(!variant.xTurn, variant.depth + 1);
+        for (Piece p : variant.pieces)
         {
             Piece newPiece = new Piece(p.type, p.xPos, p.yPos);
 
@@ -47,7 +47,7 @@ public class Variants {
                 if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
                 {
                     b.isFinished = true;
-                    Game.countVariantsProm(board.xTurn, newPiece.xPos, newPiece.yPos, playing);
+                    Game.countVariants(variant.xTurn, "Pawn Prom");
                 }
 
             }
@@ -60,8 +60,8 @@ public class Variants {
         }
         b.posPieces();
 
-        //if(b.isFinished)
-        //    b.drawBoard();
+        if(b.isFinished)
+            b.drawVariant();
 
         return b;
     }
