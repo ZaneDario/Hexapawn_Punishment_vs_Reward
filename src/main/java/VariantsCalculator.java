@@ -47,7 +47,7 @@ public class VariantsCalculator {
                 if((newPiece.type == 'x' && newPiece.yPos == 0) || (newPiece.type == 'o' && newPiece.yPos == 2))
                 {
                     b.isFinished = true;
-                    Game.countVariants(variant.xTurn, "Pawn Prom");
+                    //Game.countVariants(variant.xTurn, "Pawn Prom");
                 }
 
             }
@@ -60,8 +60,7 @@ public class VariantsCalculator {
         }
         b.posPieces();
 
-        if(b.isFinished)
-            b.drawVariant();
+        //if(b.isFinished) b.drawVariant();
 
         return b;
     }

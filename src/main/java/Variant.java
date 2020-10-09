@@ -34,13 +34,13 @@ public class Variant {
 
     public void checkVariants()
     {
-        drawVariant();
+        //drawVariant();
         possibleVariants = VariantsCalculator.getPossibleVariant(this);
 
         if(possibleVariants.size() == 0)
         {
             this.isFinished = true;
-            Game.countVariants(!this.xTurn, "Zugzwang");
+            //Game.countVariants(!this.xTurn, "Zugzwang");
         }
 
         for (Variant variant : possibleVariants) {
@@ -48,6 +48,12 @@ public class Variant {
                 variant.checkVariants();
         }
     }
+
+    public List<Variant> getPossibleVariants()
+    {
+        return possibleVariants;
+    }
+
 
     public void drawVariant()
     {
@@ -58,10 +64,5 @@ public class Variant {
             }
             System.out.println();
         }
-    }
-
-    public List<Variant> getPossibleVariants()
-    {
-        return possibleVariants;
     }
 }

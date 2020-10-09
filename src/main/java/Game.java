@@ -18,12 +18,7 @@ public class Game {
 
         initialVariant.checkVariants();
 
-           //do {
-           //    Simulator sim = new RewardLearning();
-           //    //Simulator sim = new PunishmentLearning();
-           //    sim.learn(initialVariant);
-           //}
-           //while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.98f);
+        performSimulation(initialVariant);
     }
 
     public List<Piece> initialPieces()
@@ -45,6 +40,16 @@ public class Game {
         pieces.add(x3);
 
         return pieces;
+    }
+
+    public void performSimulation(Variant initialVariant)
+    {
+        boolean reward = true; //We can modify this boolean to use either one or other system.
+        do {
+            Simulator sim = reward ? new RewardLearning() : new PunishmentLearning();
+            sim.learn(initialVariant);
+        }
+        while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.98f);
     }
 
     public static void countVariants(boolean xTurn, String cause) {
