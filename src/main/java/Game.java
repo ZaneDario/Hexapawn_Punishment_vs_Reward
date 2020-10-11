@@ -44,12 +44,13 @@ public class Game {
 
     public void performSimulation(Variant initialVariant)
     {
-        boolean reward = true; //We can modify this boolean to use either one or other system.
+        int type = 3; //We can modify this boolean to use either one or other system.
         do {
-            Simulator sim = reward ? new RewardLearning() : new PunishmentLearning();
+            Simulator sim = type == 1 ? new RewardLearning() : type == 2? new PunishmentLearning() : new PunishRewardingLearning();
             sim.learn(initialVariant);
         }
-        while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.98f);
+        while (simulatedGames < 100);
+        //while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.7f);
     }
 
     public static void countVariants(boolean xTurn, String cause) {
@@ -69,7 +70,7 @@ public class Game {
     {
         Game.simulatedGames++;
 
-        System.out.println("o Wins --> "+ oSimulatedWins + "/" + simulatedGames + " = "
+        System.out.println("o Wins --> \t"+ oSimulatedWins + "\t/\t" + simulatedGames + " = \t"
                 + ((float) oSimulatedWins/ simulatedGames));
 
     }
