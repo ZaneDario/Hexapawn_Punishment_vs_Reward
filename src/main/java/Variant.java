@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Variant {
 
@@ -8,7 +9,22 @@ public class Variant {
     public char[][] board = new char[3][3];
     public List<Piece> pieces = new ArrayList<Piece>();
     private List<Variant> possibleVariants = new ArrayList<Variant>();
+
     public boolean isFinished = false;
+
+    public void setPieces(List<Piece> pieces) {
+        this.pieces = pieces;
+    }
+    public void setPossibleVariants(List<Variant> variants) {
+        this.possibleVariants = variants;
+    }
+    public Variant copy()
+    {
+        Variant newVariant = new Variant(xTurn, depth);
+        newVariant.setPieces(this.pieces.stream().map(item -> item.copy()).collect(Collectors.toList()));
+        newVariant.setPossibleVariants(this.possibleVariants.stream().map(item -> item.copy()).collect(Collectors.toList()));
+        return newVariant;
+    }
 
     public Variant(boolean xTurn, int depth)
     {

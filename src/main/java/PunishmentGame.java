@@ -1,5 +1,5 @@
 
-public class PunishmentLearning extends Simulator
+public class PunishmentGame extends Simulator
 {
     @Override
     public void learn(Variant allVariants)

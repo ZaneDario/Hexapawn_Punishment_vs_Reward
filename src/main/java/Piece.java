@@ -9,4 +9,9 @@ public class Piece {
         this.xPos = xPos;
         this.yPos = yPos;
     }
+
+    public Piece copy()
+    {
+        return new Piece(type, xPos, yPos);
+    }
 }

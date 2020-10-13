@@ -18,7 +18,17 @@ public class Game {
 
         initialVariant.checkVariants();
 
-        performSimulation(initialVariant);
+        int gamesCount = 0;
+        int tries = 1000;
+        for (int i = 0; i < tries; i++) {
+            Variant newVariant = initialVariant.copy();
+            performSimulation(newVariant);
+
+            gamesCount += simulatedGames;
+            simulatedGames = 0;
+            oSimulatedWins = 0;
+        }
+        System.out.println("Average: " + (float)gamesCount/tries + " games to get 98% threshold.");
     }
 
     public List<Piece> initialPieces()
@@ -44,13 +54,12 @@ public class Game {
 
     public void performSimulation(Variant initialVariant)
     {
-        int type = 3; //We can modify this boolean to use either one or other system.
+        int type = 2; //We can modify this boolean to use either one or other system.
         do {
-            Simulator sim = type == 1 ? new RewardLearning() : type == 2? new PunishmentLearning() : new PunishRewardingLearning();
+            Simulator sim = type < 2 ? new RewardGame() : type == 2 ? new PunishmentGame() : new PunishRewardingGame();
             sim.learn(initialVariant);
         }
-        while (simulatedGames < 100);
-        //while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.7f);
+        while (simulatedGames < 50 || ((float) oSimulatedWins / simulatedGames) < 0.98f);
     }
 
     public static void countVariants(boolean xTurn, String cause) {
@@ -70,7 +79,7 @@ public class Game {
     {
         Game.simulatedGames++;
 
-        System.out.println("o Wins --> \t"+ oSimulatedWins + "\t/\t" + simulatedGames + " = \t"
+        System.out.println("o Wins --> "+ oSimulatedWins + "/" + simulatedGames + " = "
                 + ((float) oSimulatedWins/ simulatedGames));
 
     }

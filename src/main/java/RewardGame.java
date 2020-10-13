@@ -1,15 +1,12 @@
-public class PunishRewardingLearning extends Simulator{
+
+public class RewardGame extends Simulator {
 
     @Override
     public void learn(Variant allVariants)
     {
         simulateOneVariant(allVariants);
 
-        if(!xTurn)
-        {
-            sequence.get(sequence.size()-3).getPossibleVariants().remove(sequence.get(sequence.size()-2));
-        }
-        else
+        if(xTurn)
         {
             Game.oSimulatedWins++;
             for (int i = 0; i < sequence.size(); i+=2) {
@@ -20,5 +17,4 @@ public class PunishRewardingLearning extends Simulator{
 
         Game.checkProgress();
     }
-
 }
